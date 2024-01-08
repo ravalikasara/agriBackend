@@ -9,7 +9,6 @@ const authRoutes=require('./Routes/routes');
 const passportSetup=require('./passport-setup');
 const app = express();
 require('dotenv').config()
-console.log(process.env.PORT)
 
 
 
@@ -20,6 +19,10 @@ app.use(cors());
 
 
 app.use(express.json())
+
+
+
+
 app.use('/auth',authRoutes)
 const dbPath = path.join(__dirname, "Products.db");
 
@@ -31,8 +34,9 @@ const initializeDBAndServer = async () => {
       filename: dbPath,
       driver: sqlite3.Database,
     });
-    app.listen(process.env.PORT, () => {
-      console.log("Server Running at http://localhost:3001");
+    const port = process.env.PORT || 3001;
+    app.listen(port, () => {
+      console.log(`Server Running at http://localhost:${port}`);
     });
   } catch (e) {
     console.log(`DB Error: ${e.message}`);
